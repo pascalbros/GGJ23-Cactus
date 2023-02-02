@@ -39,18 +39,11 @@ public class RootMaker : MonoBehaviour {
         for (int i = 1; i < numberOfPieces; i++) {
             currentPiece = CreatePiece(parent, i, currentPiece.GetComponent<Rigidbody2D>());
             if (i == numberOfPieces - 2) {
-                currentPiece.GetComponent<HingeJoint2D>().enableCollision = true;
-                var tipController = currentPiece.AddComponent<TipController>();
-                tipController.player = playerNumber;
-                tip = currentPiece;
-                var trigger = currentPiece.AddComponent<CircleCollider2D>();
-                trigger.radius = 0.19f;
-                trigger.isTrigger = true;
+                ConfigureTip(currentPiece);
             }
             pieces.Add(currentPiece.transform);
         }
-        //currentPiece.GetComponent<HingeJoint2D>().autoConfigureConnectedAnchor = false;
-        draggerTip = currentPiece;
+        ConfigureLastPiece(currentPiece);
         pieces.RemoveAt(pieces.Count - 1);
         return pieces.ToArray();
     }
@@ -74,9 +67,25 @@ public class RootMaker : MonoBehaviour {
         rb.mass = 0.5f;
         var hinge = rootPiece.AddComponent<HingeJoint2D>();
         hinge.autoConfigureConnectedAnchor = true;
+        hinge.enableCollision = true;
         var collider = rootPiece.AddComponent<CircleCollider2D>();
-        collider.radius = 0.15f;
+        collider.radius = 0.1f;
         return rootPiece;
+    }
+
+    void ConfigureTip(GameObject currentPiece) {
+        currentPiece.GetComponent<HingeJoint2D>().enableCollision = true;
+        var tipController = currentPiece.AddComponent<TipController>();
+        tipController.player = playerNumber;
+        tip = currentPiece;
+        var trigger = currentPiece.AddComponent<CircleCollider2D>();
+        trigger.radius = 0.18f;
+        trigger.isTrigger = true;
+    }
+
+    void ConfigureLastPiece(GameObject piece) {
+        DestroyImmediate(piece.GetComponent<CircleCollider2D>());
+        draggerTip = piece;
     }
 
     void DrawLine(Transform[] points, Transform parent) {
