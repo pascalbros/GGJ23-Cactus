@@ -7,7 +7,7 @@ public class InputController : MonoBehaviour
     public Rigidbody2D boneRigidbody;
     public HingeJoint2D boneHinge;
     public TipController tip;
-    public bool isPlayerOne = true;
+    public int playerIndex = 0;
     public float maxForce = 0.17f;
 
     private Vector2 currentForce = Vector2.zero;
@@ -26,11 +26,8 @@ public class InputController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        var x = Input.GetAxis("Horizontal");
-        var y = Input.GetAxis("Vertical");
-        if (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0) {
-            if (!isPlayerOne && !Input.GetKey(KeyCode.Space)) { return; }
-            if (isPlayerOne && Input.GetKey(KeyCode.Space)) { return; }
+        var axis = InputSingleton.current.dPads[playerIndex];
+        if (axis.x != 0 || axis.y != 0) {
             tip.canAttach = false;
             var force = maxForce;
             var freeRoots = Forces.current.FreeRoots();
@@ -38,7 +35,7 @@ public class InputController : MonoBehaviour
             if (freeRoots == Forces.current.players) {
                 force = maxForce / (freeRoots * 2);
             }
-            currentForce = new Vector2(x * force, y * force);
+            currentForce = new Vector2(axis.x * force, axis.y * force);
         } else {
             boneRigidbody.bodyType = RigidbodyType2D.Dynamic;
             tip.canAttach = true;

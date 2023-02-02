@@ -25,9 +25,7 @@ public class RootParentMaker : MonoBehaviour
         rootParent.transform.localPosition = new Vector3(hingeOffsetStart.x + xOffset, hingeOffsetStart.y, 0.05f);
         rootParent.name = "Root";
         var input = rootParent.AddComponent<InputController>();
-        if (player != 1) {
-            input.isPlayerOne = false;
-        }
+        input.playerIndex = player - 1;
         var rootMaker = rootParent.AddComponent<RootMaker>();
         rootMaker.maxForce = maxForce;
         rootMaker.playerNumber = player;
