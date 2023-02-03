@@ -10,7 +10,6 @@ public class SpikesController: MonoBehaviour
         if (collision.name == "Cactus") {
             collision.transform.position = respawnPosition.position;
             var tips = collision.GetComponentsInChildren<TipController>();
-            Debug.Log(tips.Length);
             foreach (var tip in tips) {
                 tip.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
             }

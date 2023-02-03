@@ -21,7 +21,6 @@ public class SingingController : MonoBehaviour
     void Start() {
         spriteRenderer = GetComponent<SpriteRenderer>();
         vocalsData = getData();
-        Debug.Log(vocalsData.Count);
     }
 
     void Update()
