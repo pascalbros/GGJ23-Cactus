@@ -10,6 +10,7 @@ public class RootParentMaker : MonoBehaviour
     public Vector2 piecesOffset;
     public Material lineMaterial;
     public float maxForce = 0.11f;
+    public bool mirrorRootPosition = false;
 
     void Start() {
         Forces.current.SetPlayers(numberOfPlayers);
@@ -30,8 +31,13 @@ public class RootParentMaker : MonoBehaviour
         rootMaker.maxForce = maxForce;
         rootMaker.playerNumber = player;
         rootMaker.numberOfPieces = numberOfPieces;
-        rootMaker.piecesOffset = piecesOffset;
         rootMaker.lineMaterial = lineMaterial;
+        rootMaker.piecesOffset = piecesOffset;
+        if (mirrorRootPosition) {
+            if (player > numberOfPlayers / 2) {
+                rootMaker.piecesOffset *= Vector2.left;
+            }
+        }
     }
 
 

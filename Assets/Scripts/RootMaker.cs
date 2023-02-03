@@ -64,6 +64,7 @@ public class RootMaker : MonoBehaviour {
             layer = LayerMask.NameToLayer("Root")
         };
         var rb = rootPiece.AddComponent<Rigidbody2D>();
+        rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
         rb.mass = 0.5f;
         var hinge = rootPiece.AddComponent<HingeJoint2D>();
         hinge.autoConfigureConnectedAnchor = true;
