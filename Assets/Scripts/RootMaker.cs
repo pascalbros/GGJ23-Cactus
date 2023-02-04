@@ -9,6 +9,7 @@ public class RootMaker : MonoBehaviour {
     public Vector2 piecesOffset;
     public Material lineMaterial;
     public float maxForce = 0.11f;
+    public bool canChangeForce = true;
 
     GameObject tip;
     GameObject draggerTip;

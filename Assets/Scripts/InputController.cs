@@ -9,6 +9,7 @@ public class InputController : MonoBehaviour
     public TipController tip;
     public int playerIndex = 0;
     public float maxForce = 0.17f;
+    public bool canChangeForce = true;
 
     private Vector2 currentForce = Vector2.zero;
     // Start is called before the first frame update
@@ -30,10 +31,12 @@ public class InputController : MonoBehaviour
         if (axis.x != 0 || axis.y != 0) {
             tip.canAttach = false;
             var force = maxForce;
-            var freeRoots = Forces.current.FreeRoots();
-            force /= freeRoots == 0 ? 1 : freeRoots;
-            if (freeRoots == Forces.current.players) {
-                force = maxForce / (freeRoots * 2);
+            if (canChangeForce) {
+                var freeRoots = Forces.current.FreeRoots();
+                force /= freeRoots == 0 ? 1 : freeRoots;
+                if (freeRoots == Forces.current.players) {
+                    force = maxForce / (freeRoots * 2);
+                }
             }
             currentForce = new Vector2(axis.x * force, axis.y * force);
         } else {

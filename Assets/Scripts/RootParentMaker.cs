@@ -11,6 +11,7 @@ public class RootParentMaker : MonoBehaviour
     public Material lineMaterial;
     public float maxForce = 0.11f;
     public bool mirrorRootPosition = false;
+    public bool canChangeForce = true;
 
     void Start() {
         Forces.current.SetPlayers(numberOfPlayers);
@@ -24,9 +25,10 @@ public class RootParentMaker : MonoBehaviour
         var rootParent = new GameObject();
         rootParent.transform.parent = transform;
         rootParent.transform.localPosition = new Vector3(hingeOffsetStart.x + xOffset, hingeOffsetStart.y, 0.05f);
-        rootParent.name = "Root";
+        rootParent.name = "Root"+player;
         var input = rootParent.AddComponent<InputController>();
         input.playerIndex = player - 1;
+        input.canChangeForce = canChangeForce;
         var rootMaker = rootParent.AddComponent<RootMaker>();
         rootMaker.maxForce = maxForce;
         rootMaker.playerNumber = player;

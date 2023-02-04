@@ -5,7 +5,7 @@ using Cinemachine;
 
 public class CameraChanger : MonoBehaviour
 {
-    public CinemachineVirtualCamera camera;
+    public CinemachineVirtualCamera cinemachine;
     public bool dampingEnabled = false;
     public Vector2 damping;
     private Vector2 dampingInitialValue;
@@ -19,10 +19,10 @@ public class CameraChanger : MonoBehaviour
     private float ortoSizeInitialValue;
 
     void Start() {
-        var component = camera.GetCinemachineComponent<CinemachineFramingTransposer>();
+        var component = cinemachine.GetCinemachineComponent<CinemachineFramingTransposer>();
         dampingInitialValue = new Vector2(component.m_XDamping, component.m_YDamping);
         screenPositionInitialValue = new Vector2(component.m_ScreenX, component.m_ScreenY);
-        ortoSizeInitialValue = camera.m_Lens.OrthographicSize;
+        ortoSizeInitialValue = cinemachine.m_Lens.OrthographicSize;
     }
 
     private void OnTriggerEnter2D(Collider2D collision) {
@@ -36,7 +36,7 @@ public class CameraChanger : MonoBehaviour
     }
 
     void OnTriggerAnimation(float value) {
-        var transposer = camera.GetCinemachineComponent<CinemachineFramingTransposer>();
+        var transposer = cinemachine.GetCinemachineComponent<CinemachineFramingTransposer>();
 
         if (dampingEnabled) {
             transposer.m_XDamping = Mathf.Lerp(dampingInitialValue.x, damping.x, value);
@@ -48,7 +48,7 @@ public class CameraChanger : MonoBehaviour
         }
 
         if (ortoSizeEnabled) {
-            camera.m_Lens.OrthographicSize = Mathf.Lerp(ortoSizeInitialValue, ortoSize, value);
+            cinemachine.m_Lens.OrthographicSize = Mathf.Lerp(ortoSizeInitialValue, ortoSize, value);
         }
     }
 }

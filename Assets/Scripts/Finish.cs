@@ -5,13 +5,13 @@ using Cinemachine;
 
 public class Finish : MonoBehaviour
 {
-    public CinemachineVirtualCamera camera;
+    public CinemachineVirtualCamera cinemachine;
     public Transform newTarget;
     public Transform confetti;
 
     private void OnTriggerEnter2D(Collider2D collision) {
         if (collision.name != "Cactus") { return; }
-        camera.m_Follow = newTarget;
+        cinemachine.m_Follow = newTarget;
         confetti.gameObject.SetActive(true);
     }
 }
