@@ -125,9 +125,11 @@ MonoBehaviour:
   numberOfPlayers: 2
   numberOfPieces: 13
   hingeOffsetStart: {x: -0.28, y: -0.95}
-  piecesOffset: {x: 0, y: -0.32}
+  piecesOffset: {x: -0.32, y: 0}
   lineMaterial: {fileID: 2100000, guid: d801aa1be2a8244b78a13369da3405cb, type: 2}
   maxForce: 150
+  mirrorRootPosition: 1
+  canChangeForce: 1
 --- !u!60 &233496642751424346
 PolygonCollider2D:
   m_ObjectHideFlags: 0
