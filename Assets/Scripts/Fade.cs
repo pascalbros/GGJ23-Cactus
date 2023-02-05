@@ -2,23 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Fade : MonoBehaviour
 {
-    public Color color;
+    public string nextScene;
     public Canvas canvas;
     public Image image;
     public float time;
     public bool fadeIn;
     public float delay;
 
-    private float timer;
-    private Color finalColor;
+    public float timer;
     // Start is called before the first frame update
     void Start()
     {
-        image.color = fadeIn ? Color.clear : color;
-        finalColor = fadeIn ? color : Color.clear;
         timer = time;
         image.gameObject.SetActive(true);
     }
@@ -30,10 +28,16 @@ public class Fade : MonoBehaviour
             delay -= Time.deltaTime;
             return;
         }
-        image.color = Color.Lerp(finalColor, color, timer / time);
+        var alpha = Mathf.Lerp(fadeIn ? 0f : 1f, fadeIn ? 1f : 0f, timer / time);
+        image.color = new Color(0, 0, 0, alpha);
         timer -= Time.deltaTime;
         if (timer < 0) {
-            DestroyImmediate(gameObject);
+            if (!fadeIn && nextScene != null) {
+                SceneManager.LoadScene(nextScene);
+            }
+            if (fadeIn) {
+                DestroyImmediate(gameObject);
+            }
         }
     }
 }
