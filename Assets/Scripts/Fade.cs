@@ -19,6 +19,10 @@ public class Fade : MonoBehaviour
     {
         timer = time;
         image.gameObject.SetActive(true);
+        if (!fadeIn) {
+            canvas.worldCamera = Camera.main;
+            canvas.planeDistance = 1;
+        }
     }
 
     // Update is called once per frame
